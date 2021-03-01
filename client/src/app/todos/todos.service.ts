@@ -12,7 +12,7 @@ export class TodosService{
   readonly todoUrl: string = environment.apiUrl + 'todos';
   constructor(private httpClient: HttpClient) { }
   getTodos(): Observable<Todo[]> {
-    let httpParams: HttpParams = new HttpParams();
+    const httpParams: HttpParams = new HttpParams();
     const todos: Todo[] = [];
     return this.httpClient.get<Todo[]>(this.todoUrl, {
       params: httpParams,
