@@ -33,7 +33,7 @@ import { UserCardComponent } from './users/user-card.component';
 import { UserProfileComponent } from './users/user-profile.component';
 import { AddUserComponent } from './users/add-user.component';
 import { TodosListComponent } from './todos/todos-list.component';
-import { TodoCardComponent } from './todo-card/todo-card.component';
+import { TodoCardComponent } from './todos/todo-card.component';
 
 const MATERIAL_MODULES: any[] = [
   MatListModule,
