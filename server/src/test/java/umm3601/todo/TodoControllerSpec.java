@@ -117,7 +117,6 @@ public class TodoControllerSpec {
 
     assertEquals(200, mockRes.getStatus());
     String result = ctx.resultString();
-    assertEquals(db.getCollection("todos").countDocuments(),
-    JavalinJson.fromJson(result, Todo[].class).length);
+    assertEquals(db.getCollection("todos").countDocuments(), JavalinJson.fromJson(result, Todo[].class).length);
   }
 }
