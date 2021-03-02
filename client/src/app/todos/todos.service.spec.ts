@@ -8,9 +8,9 @@ import { TodosService } from './todos.service';
 describe('TodosService', () => {
 
   const testTodos: Todo[] = [
-    // {
-    //   _id: '1'
-    // }
+    {
+      _id: '1'
+    }
   ];
   let todoService: TodosService;
   let httpClient: HttpClient;
