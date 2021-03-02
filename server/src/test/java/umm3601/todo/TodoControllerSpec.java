@@ -91,7 +91,7 @@ public class TodoControllerSpec {
   Document eef =
     new Document()
     .append("_id", eefsId)
-    .append("name", "Eef")
+    .append("owner", "Eef")
     .append("status", true)
     .append("category", "projects")
     .append("body", "create new project");
