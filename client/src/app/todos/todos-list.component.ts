@@ -12,6 +12,7 @@ export class TodosListComponent implements OnInit, OnDestroy {
 
   public serverFilteredTodos: Todo[];
   public filteredTodo: Todo[];
+
   public todoOwner: string;
   public todoBody: string;
   public todoCategory: string;
@@ -21,11 +22,21 @@ export class TodosListComponent implements OnInit, OnDestroy {
   constructor(private todosService: TodosService) {
 
   }
+
+  getTodosFromServer(): void {
+    this.unsub();
+  }
   ngOnDestroy(): void {
     throw new Error('Method not implemented.');
   }
 
   ngOnInit(): void {
+  }
+
+  unsub(): void {
+    if (this.getTodosSub) {
+      this.getTodosSub.unsubscribe();
+    }
   }
 
 }
