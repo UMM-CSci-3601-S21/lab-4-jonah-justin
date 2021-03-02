@@ -20,6 +20,7 @@ import org.bson.types.ObjectId;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the logic of the TodoController
@@ -101,5 +102,16 @@ public class TodoControllerSpec {
     mongoClient.close();
   }
 
+  @Test
+  public void GetAllTodos() throws IOException {
 
+    //Create fake Javalin context.
+    Context ctx = ContextUtil.init(mockReq, mockRes, "api/todos");
+    todoController.getTodos(ctx);
+
+    assertEquals(200, mockRes.getStatus());
+    String result = ctx.resultString();
+    assertEquals(db.getCollection("todos").countDocuments(),
+    JavalinJson.fromJson(result, Todo[].class).length);
+  }
 }
