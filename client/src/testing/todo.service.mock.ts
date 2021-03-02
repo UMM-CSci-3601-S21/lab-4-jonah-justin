@@ -11,6 +11,20 @@ export class MockTodoService extends TodosService {
       status: 'complete',
       body: 'This Or That',
       category: 'video games'
+    },
+    {
+      _id: '2',
+      owner: 'Phil',
+      status: 'incomplete',
+      body: 'these or those',
+      category: 'project'
+    },
+    {
+      _id: '3',
+      owner: 'Wanda',
+      status: 'complete',
+      body: 'them',
+      category: 'project'
     }
   ];
   constructor() {
