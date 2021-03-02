@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import com.google.common.collect.ImmutableMap;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Sorts;
 
@@ -78,5 +79,23 @@ public class TodoController {
     .sort(sortOrder.equals("desc") ? Sorts.descending(sortBy) : Sorts.ascending(sortBy))
     .into(new ArrayList<>()));
 	}
+
+  /**
+   * Get a JSON response with a list of all the todos.
+   *
+   * @param ctx a Javalin HTTP context
+   */
+  public void addNewTodo(Context ctx) {
+    Todo newTodo = ctx.bodyValidator(Todo.class)
+      .check(td -> td.owner != null && td.owner.length() > 0) // Verify that the todo has a owner that is not blank
+      .check(td -> td.body != null && td.body.length() > 0) // Verify that the todo has a body that is not blank
+      .check(td -> td.category != null && td.category.length() > 0) // Verify that the todo has a category that is not blank
+      .check(td -> td.status == true || false) // Verify that the status is true or false (unsure if this is correct)
+      .get();
+
+    todoCollection.insertOne(newTodo);
+    ctx.status(201);
+    ctx.json(ImmutableMap.of("id", newTodo._id));
+  }
 
 }

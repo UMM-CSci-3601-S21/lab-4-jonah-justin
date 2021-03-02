@@ -216,7 +216,7 @@ public class TodoControllerSpec {
       + "\"owner\": \"Test Owner\","
       + "\"body\": \"Random test body akgdkwedvwedgawlkiedgflawidgfiewe\","
       + "\"category\": \"video games\","
-      + "\"status\": true,"
+      + "\"status\": true"
       + "}";
 
     mockReq.setBodyContent(testNewTodo);
@@ -235,7 +235,7 @@ public class TodoControllerSpec {
 
     assertEquals(1, db.getCollection("todos").countDocuments(eq("_id", new ObjectId(id))));
 
-    //verify user was added to the database and the correct ID
+    //verify todo was added to the database and the correct ID
     Document addedTodo = db.getCollection("todos").find(eq("_id", new ObjectId(id))).first();
     assertNotNull(addedTodo);
     assertEquals("Test Owner", addedTodo.getString("owner"));
