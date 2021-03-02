@@ -10,7 +10,7 @@ import com.mongodb.client.MongoDatabase;
 
 import io.javalin.Javalin;
 import io.javalin.core.util.RouteOverviewPlugin;
-
+import umm3601.todo.TodoController;
 import umm3601.user.UserController;
 
 public class Server {
@@ -36,6 +36,7 @@ public class Server {
 
     // Initialize dependencies
     UserController userController = new UserController(database);
+    TodoController todoController = new TodoController(database);
 
     Javalin server = Javalin.create(config -> {
       config.registerPlugin(new RouteOverviewPlugin("/api"));
@@ -69,6 +70,8 @@ public class Server {
     // Add new user with the user info being in the JSON body
     // of the HTTP request
     server.post("/api/users", userController::addNewUser);
+
+    server.get("api/todos", todoController::getTodos);
 
     server.exception(Exception.class, (e, ctx) -> {
       ctx.status(500);
