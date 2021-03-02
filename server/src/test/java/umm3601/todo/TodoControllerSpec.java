@@ -166,4 +166,24 @@ public class TodoControllerSpec {
     }
   }
 
+  @Test
+  public void getTodosByOwnerAndBody() throws IOException {
+
+    mockReq.setQueryString("owner=Phil&body=lorem impsum sortum");
+    Context ctx = ContextUtil.init(mockReq, mockRes, "api/todos");
+    todoController.getTodos(ctx);
+
+    // Ensure response OK
+    assertEquals(200, mockRes.getStatus());
+    String result = ctx.resultString();
+    Todo[] resultTodos = JavalinJson.fromJson(result, Todo[].class);
+
+    // There should be one returned todo.
+    assertEquals(1, resultTodos.length);
+    for (Todo todo : resultTodos) {
+      assertEquals("lorem impsum sortum", todo.body);
+      assertEquals("Phil", todo.owner);
+    }
+  }
+
 }
