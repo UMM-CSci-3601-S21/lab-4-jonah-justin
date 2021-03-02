@@ -94,5 +94,11 @@ public class TodoControllerSpec {
   todoController = new TodoController(db);
   }
 
+  @AfterAll
+  public static void teardown(){
+    db.drop();
+    mongoClient.close();
+  }
+
 
 }
