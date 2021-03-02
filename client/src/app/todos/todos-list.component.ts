@@ -11,7 +11,7 @@ import { TodosService } from './todos.service';
 export class TodosListComponent implements OnInit, OnDestroy {
 
   public serverFilteredTodos: Todo[];
-  public filteredTodo: Todo[];
+  public filteredTodos: Todo[];
 
   public todoOwner: string;
   public todoBody: string;
@@ -25,6 +25,19 @@ export class TodosListComponent implements OnInit, OnDestroy {
 
   getTodosFromServer(): void {
     this.unsub();
+    this.getTodosSub = this.todosService.getTodos({
+      status: this.todoStatus,
+      body: this.todoBody
+    }).subscribe(returnedTodos => {
+      this.serverFilteredTodos = returnedTodos;
+      this.updateFilter();
+    }, err => {
+      console.log(err);
+    });
+  }
+  updateFilter() {
+    this.filteredTodos = this.todosService.filterTodos(
+      this.serverFilteredTodos, { owner: this.todoOwner, status: this.todoStatus});
   }
   ngOnDestroy(): void {
     throw new Error('Method not implemented.');
