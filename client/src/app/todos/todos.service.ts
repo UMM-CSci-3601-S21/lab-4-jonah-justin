@@ -15,4 +15,8 @@ export class TodosService{
     const httpParams = new HttpParams();
     return this.httpClient.get<Todo[]>(this.todoUrl, { params: httpParams });
   }
+
+  getTodoById(id: string): Observable<Todo> {
+    return this.httpClient.get<Todo>(this.todoUrl + '/' + id);
+  }
 }
