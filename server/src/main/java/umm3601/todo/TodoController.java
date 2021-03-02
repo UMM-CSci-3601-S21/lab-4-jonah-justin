@@ -25,6 +25,7 @@ public class TodoController {
 	private static final String BODY_KEY = "body";
   private static final String CATEGORY_KEY = "category";
   private static final String OWNER_KEY = "owner";
+  private static final String STATUS_KEY = "status";
 
   private final JacksonMongoCollection<Todo> todoCollection;
 
@@ -62,6 +63,11 @@ public class TodoController {
 
     if (ctx.queryParamMap().containsKey(OWNER_KEY)) {
       filters.add(regex(OWNER_KEY, Pattern.quote(ctx.queryParam(OWNER_KEY)), "i"));
+    }
+
+    if (ctx.queryParamMap().containsKey(STATUS_KEY)) {
+      boolean targetStatus = ctx.queryParam(STATUS_KEY, Boolean.class).get();
+      filters.add(eq(STATUS_KEY, targetStatus));
 
     }
 
