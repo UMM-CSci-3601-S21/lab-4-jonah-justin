@@ -14,6 +14,10 @@
             [(ngModel)]="todoOwner" (input)="updateFilter()">
             <mat-hint>Filtered on Client</mat-hint>
           </mat-form-field>
+
+          <div fxLayout="row wrap" fxLayoutGap="10px" class="todo-cards-container">
+            <app-todo-card simple="true" *ngFor="let todo of filteredTodos" class="todo-card" [todo]="todo" fxFlex="1 1 280px"></app-todo-card>
+          </div>
         </div>
       </mat-card-content>
     </mat-card>

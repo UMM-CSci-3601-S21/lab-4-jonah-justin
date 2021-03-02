@@ -25,7 +25,7 @@ describe('TodosService', () => {
     });
     httpClient = TestBed.inject(HttpClient);
     httpTestingController = TestBed.inject(HttpTestingController);
-    todoService = TestBed.inject(TodosService);
+    todoService = new TodosService(httpClient);
   });
 
   afterEach(() => {

@@ -44,6 +44,7 @@ export class TodosListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.getTodosFromServer();
   }
 
   unsub(): void {
