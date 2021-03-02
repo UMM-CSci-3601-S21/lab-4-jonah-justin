@@ -1,6 +1,10 @@
 package umm3601.todo;
 
+import static com.mongodb.client.model.Filters.eq;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mockrunner.mock.web.MockHttpServletRequest;
 import com.mockrunner.mock.web.MockHttpServletResponse;
 import com.mongodb.MongoClientSettings;
@@ -24,6 +29,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import io.javalin.http.BadRequestResponse;
 import io.javalin.plugin.json.JavalinJson;
 import io.javalin.http.Context;
 import io.javalin.http.util.ContextUtil;
@@ -201,6 +207,106 @@ public class TodoControllerSpec {
     for (Todo todo : resultTodos) {
       assertEquals(true, todo.status);
     }
+  }
+
+  @Test
+  public void AddTodo() throws IOException {
+
+    String testNewTodo = "{"
+      + "\"owner\": \"Test Owner\","
+      + "\"body\": \"Random test body akgdkwedvwedgawlkiedgflawidgfiewe\","
+      + "\"category\": \"video games\","
+      + "\"status\": true,"
+      + "}";
+
+    mockReq.setBodyContent(testNewTodo);
+    mockReq.setMethod("POST");
+
+    Context ctx = ContextUtil.init(mockReq, mockRes, "api/todos");
+
+    todoController.addNewTodo(ctx);
+
+    assertEquals(201, mockRes.getStatus());
+
+    String result = ctx.resultString();
+    String id = jsonMapper.readValue(result, ObjectNode.class).get("id").asText();
+    assertNotEquals("", id);
+    System.out.println(id);
+
+    assertEquals(1, db.getCollection("todos").countDocuments(eq("_id", new ObjectId(id))));
+
+    //verify user was added to the database and the correct ID
+    Document addedTodo = db.getCollection("todos").find(eq("_id", new ObjectId(id))).first();
+    assertNotNull(addedTodo);
+    assertEquals("Test Owner", addedTodo.getString("owner"));
+    assertEquals("Random test body akgdkwedvwedgawlkiedgflawidgfiewe", addedTodo.getString("body"));
+    assertEquals("video games", addedTodo.getString("category"));
+    assertEquals(true, addedTodo.getBoolean("status"));
+  }
+
+  @Test
+  public void AddInvalidOwnerTodo() throws IOException {
+    String testNewTodo = "{"
+      + "\"body\": \"Random test body akgdkwedvwedgawlkiedgflawidgfiewe\","
+      + "\"category\": \"video games\","
+      + "\"status\": true,"
+      + "}";
+    mockReq.setBodyContent(testNewTodo);
+    mockReq.setMethod("POST");
+    Context ctx = ContextUtil.init(mockReq, mockRes, "api/todos");
+
+    assertThrows(BadRequestResponse.class, () -> {
+      todoController.addNewTodo(ctx);
+    });
+  }
+
+  @Test
+  public void AddInvalidBodyTodo() throws IOException {
+    String testNewTodo = "{"
+      + "\"owner\": \"Test Owner\","
+      + "\"category\": \"video games\","
+      + "\"status\": true,"
+      + "}";
+    mockReq.setBodyContent(testNewTodo);
+    mockReq.setMethod("POST");
+    Context ctx = ContextUtil.init(mockReq, mockRes, "api/todos");
+
+    assertThrows(BadRequestResponse.class, () -> {
+      todoController.addNewTodo(ctx);
+    });
+  }
+
+  @Test
+  public void AddInvalidCategoryTodo() throws IOException {
+    String testNewTodo = "{"
+      + "\"owner\": \"Test Owner\","
+      + "\"body\": \"Random test body akgdkwedvwedgawlkiedgflawidgfiewe\","
+      + "\"status\": true,"
+      + "}";
+    mockReq.setBodyContent(testNewTodo);
+    mockReq.setMethod("POST");
+    Context ctx = ContextUtil.init(mockReq, mockRes, "api/todos");
+
+    assertThrows(BadRequestResponse.class, () -> {
+      todoController.addNewTodo(ctx);
+    });
+  }
+
+  @Test
+  public void AddInvalidStatusTodo() throws IOException {
+    String testNewTodo = "{"
+      + "\"owner\": \"Test Owner\","
+      + "\"body\": \"Random test body akgdkwedvwedgawlkiedgflawidgfiewe\","
+      + "\"category\": \"video games\","
+      + "\"status\": \"true\","
+      + "}";
+    mockReq.setBodyContent(testNewTodo);
+    mockReq.setMethod("POST");
+    Context ctx = ContextUtil.init(mockReq, mockRes, "api/todos");
+
+    assertThrows(BadRequestResponse.class, () -> {
+      todoController.addNewTodo(ctx);
+    });
   }
 
 }
