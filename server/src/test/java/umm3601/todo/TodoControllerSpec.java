@@ -119,4 +119,27 @@ public class TodoControllerSpec {
     String result = ctx.resultString();
     assertEquals(db.getCollection("todos").countDocuments(), JavalinJson.fromJson(result, Todo[].class).length);
   }
+
+  @Test
+  public void getTodosByBody() throws IOException {
+
+    //set query string to test with
+    mockReq.setQueryString("body=create new project");
+
+    //Create fake Javalin context
+    Context ctx = ContextUtil.init(mockReq, mockRes, "api/todos");
+
+    todoController.getTodos(ctx);
+
+    //The response status should be OK
+    assertEquals(200, mockRes.getStatus());
+
+    String result = ctx.resultString();
+    Todo[] resultTodos = JavalinJson.fromJson(result, Todo[].class);
+
+    assertEquals(1, resultTodos.length); //There should be 1 todo return
+    for (Todo todo : resultTodos) {
+      assertEquals("create new project", todo.body); //It should be owned by phil.
+    }
+  }
 }
