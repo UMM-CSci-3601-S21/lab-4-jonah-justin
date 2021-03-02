@@ -186,4 +186,21 @@ public class TodoControllerSpec {
     }
   }
 
+  @Test
+  public void getTodosByStatus() throws IOException {
+    mockReq.setQueryString("status=true");
+    Context ctx = ContextUtil.init(mockReq, mockRes, "api/todos");
+    todoController.getTodos(ctx);
+
+    // Ensure HTTP response is OK
+    assertEquals(200, mockRes.getStatus());
+    String result = ctx.resultString();
+    Todo[] resultTodos = JavalinJson.fromJson(result, Todo[].class);
+
+    assertEquals(2, resultTodos.length);
+    for (Todo todo : resultTodos) {
+      assertEquals(true, todo.status);
+    }
+  }
+
 }
