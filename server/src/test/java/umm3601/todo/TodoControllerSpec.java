@@ -142,4 +142,28 @@ public class TodoControllerSpec {
       assertEquals("create new project", todo.body); //It should be owned by phil.
     }
   }
+
+  @Test
+  public void getTodosByOwner() throws IOException {
+
+    // Set the query string to test with.
+    mockReq.setQueryString("owner=Phil");
+
+    // Create fake Javalin context.
+    Context ctx = ContextUtil.init(mockReq, mockRes, "api/todos");
+
+    todoController.getTodos(ctx);
+
+    // Ensure OK response (http).
+    assertEquals(200, mockRes.getStatus());
+
+    String result = ctx.resultString();
+    Todo[] resultTodos = JavalinJson.fromJson(result, Todo[].class);
+
+    assertEquals(1, resultTodos.length);
+    for (Todo todo : resultTodos) {
+      assertEquals("Phil", todo.owner);
+    }
+  }
+
 }

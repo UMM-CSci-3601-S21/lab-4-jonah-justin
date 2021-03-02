@@ -24,6 +24,7 @@ public class TodoController {
 
 	private static final String BODY_KEY = "body";
   private static final String CATEGORY_KEY = "category";
+  private static final String OWNER_KEY = "owner";
 
   private final JacksonMongoCollection<Todo> todoCollection;
 
@@ -57,6 +58,11 @@ public class TodoController {
 
     if (ctx.queryParamMap().containsKey(CATEGORY_KEY)) {
       filters.add(regex(CATEGORY_KEY, Pattern.quote(ctx.queryParam(CATEGORY_KEY)), "i"));
+    }
+
+    if (ctx.queryParamMap().containsKey(OWNER_KEY)) {
+      filters.add(regex(OWNER_KEY, Pattern.quote(ctx.queryParam(OWNER_KEY)), "i"));
+
     }
 
     String sortBy = ctx.queryParam("sortby", "body");
