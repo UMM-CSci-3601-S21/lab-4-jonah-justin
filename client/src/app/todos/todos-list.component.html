@@ -1,1 +1,25 @@
-<p>todos-list works!</p>
+<div fxLayout="row">
+  <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10">
+
+    <mat-card class="search-card">
+      <mat-card-title class="todo-list-title">Todos</mat-card-title>
+      <mat-card-content fxLayout="column" >
+
+        <div fxLayout="row wrap" fxLayoutGap="10px">
+          <!-- Examples of filtering in Angular-->
+
+          <mat-form-field class="input-field">
+            <mat-label>Owner</mat-label>
+            <input matInput data-test="todoOwnerInput" placeholder="Filter by Owner"
+            [(ngModel)]="todoOwner" (input)="updateFilter()">
+            <mat-hint>Filtered on Client</mat-hint>
+          </mat-form-field>
+
+          <div fxLayout="row wrap" fxLayoutGap="10px" class="todo-cards-container">
+            <app-todo-card simple="true" *ngFor="let todo of filteredTodos" class="todo-card" [todo]="todo" fxFlex="1 1 280px"></app-todo-card>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

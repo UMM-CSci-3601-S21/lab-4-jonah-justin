@@ -9,7 +9,11 @@ describe('TodosService', () => {
 
   const testTodos: Todo[] = [
     {
-      _id: '1'
+      _id: '1',
+      owner: 'Bill',
+      status: 'complete',
+      body: 'This Or That',
+      category: 'video games'
     }
   ];
   let todoService: TodosService;
@@ -21,7 +25,11 @@ describe('TodosService', () => {
     });
     httpClient = TestBed.inject(HttpClient);
     httpTestingController = TestBed.inject(HttpTestingController);
-    todoService = TestBed.inject(TodosService);
+    todoService = new TodosService(httpClient);
+  });
+
+  afterEach(() => {
+    httpTestingController.verify();
   });
 
   it('should be created', () => {
@@ -36,5 +44,18 @@ describe('TodosService', () => {
     const req = httpTestingController.expectOne(todoService.todoUrl);
     expect(req.request.method).toEqual('GET');
     req.flush(testTodos);
+  });
+
+  it('getTodosById() calls api/todos/id', () => {
+    const targetTodo: Todo = testTodos[0];
+    const targetId: string= targetTodo._id;
+    todoService.getTodoById(targetId).subscribe(
+      todo => expect(todo).toBe(targetTodo)
+    );
+
+    const expectedUrl: string = todoService.todoUrl + '/' + targetId;
+    const req = httpTestingController.expectOne(expectedUrl);
+    expect(req.request.method).toEqual('GET');
+    req.flush(targetTodo);
   });
 });

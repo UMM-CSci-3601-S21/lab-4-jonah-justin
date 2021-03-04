@@ -20,7 +20,8 @@
       "sams",
       "sidenav",
       "testid",
-      "todos"
+      "todos",
+      "unsub"
     ],
     "angular.enable-experimental-ivy-prompt": false,
 }
