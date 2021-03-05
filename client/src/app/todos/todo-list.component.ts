@@ -1,14 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { Todo, TodoStatus } from './todo';
-import { TodosService } from './todos.service';
+import { TodoService } from './todo.service';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-todos-list',
-  templateUrl: './todos-list.component.html',
-  styleUrls: ['./todos-list.component.scss']
+  selector: 'app-todo-list',
+  templateUrl: 'todo-list.component.html',
+  styleUrls: ['./todo-list.component.scss'],
+  providers: []
 })
-export class TodosListComponent implements OnInit, OnDestroy {
+export class TodoListComponent implements OnInit, OnDestroy {
 
   public serverFilteredTodos: Todo[];
   public filteredTodos: Todo[];
@@ -19,13 +20,13 @@ export class TodosListComponent implements OnInit, OnDestroy {
   public todoStatus: TodoStatus;
   getTodosSub: Subscription;
 
-  constructor(private todosService: TodosService) {
+  constructor(private todoService: TodoService) {
 
   }
 
   getTodosFromServer(): void {
     this.unsub();
-    this.getTodosSub = this.todosService.getTodos({
+    this.getTodosSub = this.todoService.getTodos({
       status: this.todoStatus,
       body: this.todoBody,
       category: this.todoCategory
@@ -36,16 +37,17 @@ export class TodosListComponent implements OnInit, OnDestroy {
       console.log(err);
     });
   }
-  updateFilter() {
-    this.filteredTodos = this.todosService.filterTodos(
-      this.serverFilteredTodos, { owner: this.todoOwner, category: this.todoCategory, body: this.todoBody});
-  }
-  ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
+  public updateFilter(): void {
+    this.filteredTodos = this.todoService.filterTodos(
+      this.serverFilteredTodos, {owner: this.todoOwner, category: this.todoCategory, body: this.todoBody});
   }
 
   ngOnInit(): void {
     this.getTodosFromServer();
+  }
+
+  ngOnDestroy(): void {
+    this.unsub();
   }
 
   unsub(): void {

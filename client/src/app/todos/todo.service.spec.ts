@@ -3,7 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { TestBed } from '@angular/core/testing';
 import { Todo } from './todo';
 
-import { TodosService } from './todos.service';
+import { TodoService } from './todo.service';
 
 describe('TodosService', () => {
 
@@ -16,7 +16,7 @@ describe('TodosService', () => {
       category: 'video games'
     }
   ];
-  let todoService: TodosService;
+  let todoService: TodoService;
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
   beforeEach(() => {
@@ -25,7 +25,7 @@ describe('TodosService', () => {
     });
     httpClient = TestBed.inject(HttpClient);
     httpTestingController = TestBed.inject(HttpTestingController);
-    todoService = new TodosService(httpClient);
+    todoService = new TodoService(httpClient);
   });
 
   afterEach(() => {

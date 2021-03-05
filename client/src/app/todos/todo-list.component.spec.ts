@@ -2,23 +2,23 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MockTodoService } from '../../testing/todo.service.mock';
 import { Todo } from './todo';
-import { TodosListComponent } from './todos-list.component';
-import { TodosService } from './todos.service';
+import { TodoListComponent } from './todo-list.component';
+import { TodoService } from './todo.service';
 
-describe('TodosListComponent', () => {
-  let todoList: TodosListComponent;
-  let fixture: ComponentFixture<TodosListComponent>;
+describe('TodoListComponent', () => {
+  let todoList: TodoListComponent;
+  let fixture: ComponentFixture<TodoListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TodosListComponent ],
-      providers: [{ provide: TodosService, useValue: new MockTodoService() }]
+      declarations: [ TodoListComponent ],
+      providers: [{ provide: TodoService, useValue: new MockTodoService() }]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TodosListComponent);
+    fixture = TestBed.createComponent(TodoListComponent);
     todoList = fixture.componentInstance;
     fixture.detectChanges();
   });

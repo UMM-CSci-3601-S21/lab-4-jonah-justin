@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import { Todo, TodoStatus } from './todo';
 
 @Injectable()
-export class TodosService{
+export class TodoService{
   readonly todoUrl: string = environment.apiUrl + 'todos';
 
   constructor(private httpClient: HttpClient) { }

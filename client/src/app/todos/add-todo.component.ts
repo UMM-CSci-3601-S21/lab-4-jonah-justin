@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Todo } from './todo';
-import { TodosService } from './todos.service';
+import { TodoService } from './todo.service';
 
 @Component({
   selector: 'app-add-todo',
@@ -39,7 +39,7 @@ export class AddTodoComponent implements OnInit {
   };
   constructor(
     private fb: FormBuilder,
-    private todoService: TodosService,
+    private todoService: TodoService,
     private snackbar: MatSnackBar,
     private router: Router) { }
 
