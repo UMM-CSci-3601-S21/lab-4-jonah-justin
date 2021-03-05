@@ -31,7 +31,7 @@ export class TodosService{
     return this.httpClient.get<Todo>(this.todoUrl + '/' + id);
   }
 
-  filterTodos(todos: Todo[], filters: { owner?: string; category?: string }): Todo[] {
+  filterTodos(todos: Todo[], filters: { owner?: string; category?: string; body: string}): Todo[] {
 
     let filteredTodos = todos;
 
@@ -45,6 +45,12 @@ export class TodosService{
       filters.category = filters.category.toLowerCase();
 
       filteredTodos = filteredTodos.filter(todo => todo.category.toLowerCase().indexOf(filters.category) !== -1);
+    }
+
+    if (filters.body) {
+      filters.body = filters.body.toLowerCase();
+
+      filteredTodos = filteredTodos.filter(todo => todo.body.toLowerCase().indexOf(filters.body) !== -1);
     }
 
     // if (filters.status) {
