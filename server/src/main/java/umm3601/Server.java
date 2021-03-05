@@ -73,6 +73,8 @@ public class Server {
 
     server.get("api/todos", todoController::getTodos);
 
+    server.post("api/todos", todoController::addNewTodo);
+
     server.exception(Exception.class, (e, ctx) -> {
       ctx.status(500);
       ctx.json(e); // you probably want to remove this in production
