@@ -38,7 +38,7 @@ export class TodosListComponent implements OnInit, OnDestroy {
   }
   updateFilter() {
     this.filteredTodos = this.todosService.filterTodos(
-      this.serverFilteredTodos, { owner: this.todoOwner, category: this.todoCategory});
+      this.serverFilteredTodos, { owner: this.todoOwner, category: this.todoCategory, body: this.todoBody});
   }
   ngOnDestroy(): void {
     throw new Error('Method not implemented.');
