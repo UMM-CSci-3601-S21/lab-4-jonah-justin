@@ -45,7 +45,7 @@ export class AddTodoComponent implements OnInit {
 
   createForms() {
     this.addTodoForm = this.fb.group({
-      name: new FormControl('', Validators.compose([
+      owner: new FormControl('', Validators.compose([
         Validators.required,
         Validators.minLength(2),
         Validators.maxLength(50),
@@ -58,14 +58,14 @@ export class AddTodoComponent implements OnInit {
         },
       ])),
 
-      company: new FormControl('', Validators.compose([
+      category: new FormControl('', Validators.compose([
         Validators.required,
         Validators.minLength(2)
       ])),
 
       status: new FormControl('incomplete', Validators.compose([
         Validators.required,
-        Validators.pattern('^(complete|incomplete)$'),
+        Validators.pattern('^(true|false)$'),
       ])),
 
       body: new FormControl('', Validators.compose([
@@ -85,7 +85,7 @@ export class AddTodoComponent implements OnInit {
       });
       this.router.navigate(['/todos/', newID]);
     }, err => {
-      this.snackbar.open('Failed to add the user', 'OK', {
+      this.snackbar.open('Failed to add the todo', 'OK', {
         duration: 5000,
       });
     });

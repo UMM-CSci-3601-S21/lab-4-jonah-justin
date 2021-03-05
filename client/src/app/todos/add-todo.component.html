@@ -39,7 +39,7 @@ is potentially helpful and contributed to the shaping of this example -->
               <mat-option value="true">Complete</mat-option>
               <mat-option value="false">Incomplete</mat-option>
             </mat-select>
-            <mat-error *ngIf="addTodoForm.get('status').hasError('required')">You must make a selection</mat-error>"
+            <mat-error *ngIf="addTodoForm.get('status').hasError('required')">You must make a selection</mat-error>
             <mat-error *ngIf="addTodoForm.get('status').hasError('pattern') && !addTodoForm.get('status').hasError('required')">
               You're selection is invalid.
             </mat-error>
