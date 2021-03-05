@@ -43,9 +43,6 @@ export class AddTodoComponent implements OnInit {
     private snackbar: MatSnackBar,
     private router: Router) { }
 
-  ngOnInit(): void {
-    this.createForms();
-  }
   createForms() {
     this.addTodoForm = this.fb.group({
       name: new FormControl('', Validators.compose([
@@ -76,6 +73,11 @@ export class AddTodoComponent implements OnInit {
       ])),
     });
   }
+
+  ngOnInit(): void {
+    this.createForms();
+  }
+
   submitForm() {
     this.todoService.addTodo(this.addTodoForm.value).subscribe(newID => {
       this.snackbar.open('Added Todo ' + this.addTodoForm.value.owner, null, {
