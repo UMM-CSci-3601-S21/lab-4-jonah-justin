@@ -10,6 +10,7 @@ import { Todo, TodoStatus } from './todo';
 })
 export class TodosService{
   readonly todoUrl: string = environment.apiUrl + 'todos';
+
   constructor(private httpClient: HttpClient) { }
   getTodos(filters?: { status?: TodoStatus; body?: string; owner?: string; category?: string}): Observable<Todo[]> {
     let httpParams = new HttpParams();
@@ -59,5 +60,9 @@ export class TodosService{
     // }
 
     return filteredTodos;
+  }
+
+  addTodo(newTodo: Todo): Observable<string> {
+    return this.httpClient.post<{id: string}>(this.todoUrl, newTodo).pipe(map(res => res.id));
   }
 }
