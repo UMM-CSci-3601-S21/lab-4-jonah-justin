@@ -17,7 +17,7 @@ export class AddTodoComponent implements OnInit {
   todo: Todo;
 
   addTodoValidationMessages = {
-    name: [
+    owner: [
       {type: 'required', message: 'Owner is required'},
       {type: 'minlength', message: 'Owner must be at least 2 characters'},
       {type: 'maxlength', message: 'Owner cannot be more than 50 characters'},
