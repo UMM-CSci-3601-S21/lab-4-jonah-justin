@@ -34,7 +34,7 @@ import { UserProfileComponent } from './users/user-profile.component';
 import { AddUserComponent } from './users/add-user.component';
 import { TodosListComponent } from './todos/todos-list.component';
 import { TodoCardComponent } from './todos/todo-card.component';
-import { AddTodoComponent } from './add-todo/add-todo.component';
+import { AddTodoComponent } from './todos/add-todo.component';
 
 const MATERIAL_MODULES: any[] = [
   MatListModule,
