@@ -5,9 +5,7 @@ import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import { Todo, TodoStatus } from './todo';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class TodosService{
   readonly todoUrl: string = environment.apiUrl + 'todos';
 
