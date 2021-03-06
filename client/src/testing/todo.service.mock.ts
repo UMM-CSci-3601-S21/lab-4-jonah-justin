@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { Todo } from 'src/app/todos/todo';
-import { TodosService } from '../app/todos/todo.service';
+import { TodoService } from '../app/todos/todo.service';
 @Injectable()
-export class MockTodoService extends TodosService {
+export class MockTodoService extends TodoService {
   static testTodos: Todo[] = [
     {
       _id: '1',
