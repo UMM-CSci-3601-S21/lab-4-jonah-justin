@@ -5,7 +5,7 @@ const page = new UserListPage();
 describe('User list', () => {
 
   before(() => {
-    cy.task('seed:database');
+    cy.task('seed:database', null, { timeout: 20000 });
   });
 
   beforeEach(() => {
